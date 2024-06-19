@@ -17,7 +17,7 @@ public class CreateItemUseCase {
 
         if (item.getName().isEmpty()) {
             throw new BadRequestException("Name is mandatory");
-        } else if (item.getPrice() == null || item.getPrice() > 0) {
+        } else if (item.getPrice() == null || item.getPrice() < 0) {
             throw new BadRequestException("Price is mandatory and more than 0");
         } else if (itemRepository.existsByName(item.getName())) {
             throw new BadRequestException("Item with same name already exists");

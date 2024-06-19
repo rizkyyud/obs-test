@@ -33,7 +33,7 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<ApiResponse<Item>> createItem(@RequestBody Item item) {
         Item saveItem = itemService.createItem(item);
-        ApiResponse<Item> response = new ApiResponse<>("success", saveItem, "Data Success Updated",
+        ApiResponse<Item> response = new ApiResponse<>("success", saveItem, "Data Success Added",
                 HttpStatus.OK.value());
         return ResponseEntity.ok(response);
     }
@@ -46,8 +46,9 @@ public class ItemController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Item>> deleteItem(@PathVariable Long id) {
         itemService.deleteItem(id);
-        return ResponseEntity.noContent().build();
+        ApiResponse<Item> response = new ApiResponse<>("success", null, "Data Success Delete", HttpStatus.OK.value());
+        return ResponseEntity.ok(response);
     }
 }
