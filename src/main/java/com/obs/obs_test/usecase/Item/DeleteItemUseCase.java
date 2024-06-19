@@ -1,21 +1,17 @@
 package com.obs.obs_test.usecase.Item;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import com.obs.obs_test.model.entity.Item;
 import com.obs.obs_test.repository.ItemRepository;
 
 @Component
-public class GetAllItemUseCase {
+public class DeleteItemUseCase {
 
     @Autowired
     private ItemRepository itemRepository;
 
-    public Page<Item> execute(Pageable pageable) {
-        return itemRepository.findAll(pageable);
+    public void execute(Long id) {
+        itemRepository.deleteById(id);
     }
-
 }

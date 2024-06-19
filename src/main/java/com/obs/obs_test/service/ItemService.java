@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.obs.obs_test.model.entity.Item;
 import com.obs.obs_test.repository.ItemRepository;
+import com.obs.obs_test.usecase.Item.CreateItemUseCase;
+import com.obs.obs_test.usecase.Item.DeleteItemUseCase;
+import com.obs.obs_test.usecase.Item.GetAllItemUseCase;
+import com.obs.obs_test.usecase.Item.GetItemByIdUseCase;
+import com.obs.obs_test.usecase.Item.UpdateItemUseCase;
 
 @Service
 public class ItemService {
@@ -16,12 +21,27 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private CreateItemUseCase createItemUseCase;
+
+    @Autowired
+    private GetAllItemUseCase getAllItemUseCase;
+
+    @Autowired
+    private UpdateItemUseCase updateItemUseCase;
+
+    @Autowired
+    private GetItemByIdUseCase getItemByIdUseCase;
+
+    @Autowired
+    private DeleteItemUseCase deleteItemUseCase;
+
     public Page<Item> getAllItem(Pageable pageable) {
-        return itemRepository.findAll(pageable);
+        return getAllItemUseCase.execute(pageable);
     }
 
-    public Optional<Item> getItemById(Long id) {
-        return itemRepository.findById(id);
+    public Item getItemById(Long id) {
+        return getItemByIdUseCase.execute(id);
     }
 
     public boolean existsByName(String name) {
@@ -29,16 +49,14 @@ public class ItemService {
     }
 
     public Item createItem(Item item) {
-        return itemRepository.save(item);
+        return createItemUseCase.execute(item);
     }
 
-    public Item updateItem(Long id, Item itemRequest, Item itemData) {
-        itemData.setName(itemRequest.getName());
-        itemData.setPrice(itemRequest.getPrice());
-        return itemRepository.save(itemData);
+    public Item updateItem(Long id, Item itemData) {
+        return updateItemUseCase.execute(id, itemData);
     }
 
     public void deleteItem(Long id) {
-        itemRepository.deleteById(id);
+        deleteItemUseCase.execute(id);
     }
 }

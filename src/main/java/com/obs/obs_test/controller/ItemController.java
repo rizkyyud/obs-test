@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.obs.obs_test.exception.ApiResponse;
 import com.obs.obs_test.model.entity.Item;
 import com.obs.obs_test.service.ItemService;
-import com.obs.obs_test.usecase.Item.CreateItemUseCase;
-import com.obs.obs_test.usecase.Item.GetAllItemUseCase;
-import com.obs.obs_test.usecase.Item.UpdateItemUseCase;
 
 @RestController
 @RequestMapping("/api/items")
@@ -28,28 +25,22 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-    @Autowired
-    private CreateItemUseCase createItemUseCase;
-
-    @Autowired
-    private GetAllItemUseCase getAllItemUseCase;
-
-    @Autowired
-    private UpdateItemUseCase updateItemUseCase;
-
     @GetMapping
     public Page<Item> getAllItem(Pageable pageable) {
-        return getAllItemUseCase.execute(pageable);
+        return itemService.getAllItem(pageable);
     }
 
     @PostMapping
-    public Item createItem(@RequestBody Item item) {
-        return createItemUseCase.execute(item);
+    public ResponseEntity<ApiResponse<Item>> createItem(@RequestBody Item item) {
+        Item saveItem = itemService.createItem(item);
+        ApiResponse<Item> response = new ApiResponse<>("success", saveItem, "Data Success Updated",
+                HttpStatus.OK.value());
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Item>> updateItem(@PathVariable Long id, @RequestBody Item itemDetails) {
-        Item item = updateItemUseCase.execute(id, itemDetails);
+        Item item = itemService.updateItem(id, itemDetails);
         ApiResponse<Item> response = new ApiResponse<>("success", item, "Data Success Updated", HttpStatus.OK.value());
         return ResponseEntity.ok(response);
     }

@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 
 import com.obs.obs_test.exception.BadRequestException;
 import com.obs.obs_test.model.entity.Item;
-import com.obs.obs_test.service.ItemService;
+import com.obs.obs_test.repository.ItemRepository;
 
 @Component
 public class CreateItemUseCase {
 
     @Autowired
-    private ItemService itemService;
+    private ItemRepository itemRepository;
 
     public Item execute(Item item) {
 
@@ -19,10 +19,10 @@ public class CreateItemUseCase {
             throw new BadRequestException("Name is mandatory");
         } else if (item.getPrice() == null || item.getPrice() > 0) {
             throw new BadRequestException("Price is mandatory and more than 0");
-        } else if (itemService.existsByName(item.getName())) {
+        } else if (itemRepository.existsByName(item.getName())) {
             throw new BadRequestException("Item with same name already exists");
         }
 
-        return itemService.createItem(item);
+        return itemRepository.save(item);
     }
 }
