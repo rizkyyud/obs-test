@@ -22,13 +22,13 @@ public class CreateInventoryUseCase {
 
     @Transactional
     public Inventory execute(Inventory inventory) {
-        Item existItem = itemRepository.findById(inventory.getItemId())
+        Item existItem = itemRepository.findById(inventory.getItem().getId())
                 .orElseThrow(() -> new BadRequestException("Item id not found"));
         if (inventory.getType().equalsIgnoreCase("T")) {
             try {
 
                 Inventory inventorySave = new Inventory();
-                inventorySave.setItemId(inventory.getItemId());
+                inventorySave.setItem(existItem);
                 inventorySave.setQty(inventory.getQty());
                 inventorySave.setType("T");
 
@@ -46,7 +46,7 @@ public class CreateInventoryUseCase {
                 }
 
                 Inventory inventorySave = new Inventory();
-                inventorySave.setItemId(inventory.getItemId());
+                inventorySave.setItem(existItem);
                 inventorySave.setQty(inventory.getQty());
                 inventorySave.setType("W");
 

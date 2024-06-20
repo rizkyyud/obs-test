@@ -22,7 +22,7 @@ public class UpdateInventoryUseCase {
 
     @Transactional
     public Inventory execute(Long id, Inventory inventory) {
-        Item existItem = itemRepository.findById(inventory.getItemId())
+        Item existItem = itemRepository.findById(inventory.getItem().getId())
                 .orElseThrow(() -> new BadRequestException("Item id not found"));
         Inventory existInventory = inventoryRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Inventory id not found"));
@@ -36,7 +36,7 @@ public class UpdateInventoryUseCase {
                 }
 
                 Inventory inventorySave = new Inventory();
-                inventorySave.setItemId(inventory.getItemId());
+                inventorySave.setItem(existItem);
                 inventorySave.setQty(inventory.getQty());
                 inventorySave.setType("T");
 
@@ -55,7 +55,7 @@ public class UpdateInventoryUseCase {
                 }
 
                 Inventory inventorySave = new Inventory();
-                inventorySave.setItemId(inventory.getItemId());
+                inventorySave.setItem(existItem);
                 inventorySave.setQty(inventory.getQty());
                 inventorySave.setType("W");
 

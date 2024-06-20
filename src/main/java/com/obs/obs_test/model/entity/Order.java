@@ -26,6 +26,6 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
-    private int qty;
+    private Integer qty;
 
 }
