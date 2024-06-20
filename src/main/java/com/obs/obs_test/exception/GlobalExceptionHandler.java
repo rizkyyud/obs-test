@@ -33,12 +33,4 @@ public class GlobalExceptionHandler {
         ApiResponse<Void> response = new ApiResponse<>("error", errorDetails, HttpStatus.INTERNAL_SERVER_ERROR.value());
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ApiResponse<Void>> handleGlobalIllegalException(Exception ex, WebRequest request) {
-        ApiResponse.ErrorDetails errorDetails = new ApiResponse.ErrorDetails("Internal Server Error",
-                ex.getMessage());
-        ApiResponse<Void> response = new ApiResponse<>("error", errorDetails, HttpStatus.INTERNAL_SERVER_ERROR.value());
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 }
