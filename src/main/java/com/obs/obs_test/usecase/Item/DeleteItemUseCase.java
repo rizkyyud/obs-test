@@ -24,10 +24,10 @@ public class DeleteItemUseCase {
             if (item.isPresent()) {
                 itemRepository.deleteById(id);
             } else {
-                new BadRequestException("Item id not found");
+                throw new BadRequestException("Item id not found");
             }
         } catch (Exception e) {
-            new BadRequestException(e.getMessage());
+            throw new BadRequestException(e.getMessage());
         }
 
     }

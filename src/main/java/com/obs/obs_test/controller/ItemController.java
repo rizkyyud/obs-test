@@ -26,8 +26,19 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping
-    public Page<Item> getAllItem(Pageable pageable) {
-        return itemService.getAllItem(pageable);
+    public ResponseEntity<ApiResponse<Page<Item>>> getAllItem(Pageable pageable) {
+        Page<Item> itemPage = itemService.getAllItem(pageable);
+        ApiResponse<Page<Item>> response = new ApiResponse<>("success", itemPage, "Data Success Get",
+                HttpStatus.OK.value());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<Item>> getItemById(Long id) {
+        Item item = itemService.getItemById(id);
+        ApiResponse<Item> response = new ApiResponse<>("success", item, "Data Success Get",
+                HttpStatus.OK.value());
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping

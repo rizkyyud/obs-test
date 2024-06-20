@@ -1,38 +1,53 @@
 package com.obs.obs_test.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.obs.obs_test.model.entity.Inventory;
-import com.obs.obs_test.repository.InventoryRepository;
+import com.obs.obs_test.usecase.Inventory.CreateInventoryUseCase;
+import com.obs.obs_test.usecase.Inventory.DeleteInventoryUseCase;
 import com.obs.obs_test.usecase.Inventory.GetAllInventoryUseCase;
-
-import jakarta.transaction.Transactional;
+import com.obs.obs_test.usecase.Inventory.GetInventoryByIdUseCase;
+import com.obs.obs_test.usecase.Inventory.UpdateInventoryUseCase;
 
 @Service
 public class InventoryService {
 
     @Autowired
-    private InventoryRepository inventoryRepository;
+    private GetAllInventoryUseCase getAllInventoryUseCase;
 
     @Autowired
-    private GetAllInventoryUseCase getAllInventoryUseCase;
+    private GetInventoryByIdUseCase getInventoryByIdUseCase;
+
+    @Autowired
+    private CreateInventoryUseCase createInventoryUseCase;
+
+    @Autowired
+    private UpdateInventoryUseCase updateInventoryUseCase;
+
+    @Autowired
+    private DeleteInventoryUseCase deleteInventoryUseCase;
 
     public Page<Inventory> getAllInventory(Pageable pageable) {
         return getAllInventoryUseCase.execute(pageable);
     }
 
-    public Optional<Inventory> getInventoryById(Long id) {
-        return inventoryRepository.findById(id);
+    public Inventory getInventoriesById(Long id) {
+        return getInventoryByIdUseCase.execute(id);
     }
 
-    @Transactional
-    public Inventory creatInventory(Inventory inventory) {
-
-        return inventoryRepository.save(inventory);
+    public Inventory createInventory(Inventory inventory) {
+        return createInventoryUseCase.execute(inventory);
     }
+
+    public Inventory updateInventory(Long id, Inventory inventory) {
+        return updateInventoryUseCase.execute(id, inventory);
+    }
+
+    public void deleteInventory(Long id) {
+        deleteInventoryUseCase.execute(id);
+    }
+
 }
