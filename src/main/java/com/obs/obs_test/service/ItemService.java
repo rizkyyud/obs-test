@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.obs.obs_test.model.entity.Item;
+import com.obs.obs_test.model.request.ItemRequest;
 import com.obs.obs_test.usecase.Item.CreateItemUseCase;
 import com.obs.obs_test.usecase.Item.DeleteItemUseCase;
 import com.obs.obs_test.usecase.Item.GetAllItemUseCase;
@@ -38,11 +39,11 @@ public class ItemService {
         return getItemByIdUseCase.execute(id);
     }
 
-    public Item createItem(Item item) {
+    public Item createItem(ItemRequest item) {
         return createItemUseCase.execute(item);
     }
 
-    public Item updateItem(Long id, Item itemData) {
+    public Item updateItem(Long id, ItemRequest itemData) {
         return updateItemUseCase.execute(id, itemData);
     }
 

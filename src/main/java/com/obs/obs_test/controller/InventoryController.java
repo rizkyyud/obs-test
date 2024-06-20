@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.obs.obs_test.exception.ApiResponse;
 import com.obs.obs_test.model.entity.Inventory;
+import com.obs.obs_test.model.request.InventoryRequest;
 import com.obs.obs_test.service.InventoryService;
 
 @RestController
@@ -42,7 +43,7 @@ public class InventoryController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Inventory>> createItem(@RequestBody Inventory inventory) {
+    public ResponseEntity<ApiResponse<Inventory>> createItem(@RequestBody InventoryRequest inventory) {
         Inventory saveInventory = inventoryService.createInventory(inventory);
         ApiResponse<Inventory> response = new ApiResponse<>("success", saveInventory, "Data Success Added",
                 HttpStatus.OK.value());
@@ -51,7 +52,7 @@ public class InventoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<Inventory>> updateItem(@PathVariable Long id,
-            @RequestBody Inventory inventoryData) {
+            @RequestBody InventoryRequest inventoryData) {
         Inventory inventory = inventoryService.updateInventory(id, inventoryData);
         ApiResponse<Inventory> response = new ApiResponse<>("success", inventory, "Data Success Updated",
                 HttpStatus.OK.value());

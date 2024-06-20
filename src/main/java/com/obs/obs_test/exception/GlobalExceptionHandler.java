@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import jakarta.validation.ConstraintViolationException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -20,6 +22,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ApiResponse<Void>> handleBadRequestException(BadRequestException ex, WebRequest request) {
+        ApiResponse.ErrorDetails errorDetails = new ApiResponse.ErrorDetails(ex.getMessage(),
+                "Invalid input provided.");
+        ApiResponse<Void> response = new ApiResponse<>("error", errorDetails, HttpStatus.BAD_REQUEST.value());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ApiResponse<Void>> handleBadRequestException(ConstraintViolationException ex,
+            WebRequest request) {
         ApiResponse.ErrorDetails errorDetails = new ApiResponse.ErrorDetails(ex.getMessage(),
                 "Invalid input provided.");
         ApiResponse<Void> response = new ApiResponse<>("error", errorDetails, HttpStatus.BAD_REQUEST.value());

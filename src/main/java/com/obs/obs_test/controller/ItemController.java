@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.obs.obs_test.exception.ApiResponse;
 import com.obs.obs_test.model.entity.Item;
+import com.obs.obs_test.model.request.ItemRequest;
 import com.obs.obs_test.service.ItemService;
 
 @RestController
@@ -42,7 +43,7 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Item>> createItem(@RequestBody Item item) {
+    public ResponseEntity<ApiResponse<Item>> createItem(@RequestBody ItemRequest item) {
         Item saveItem = itemService.createItem(item);
         ApiResponse<Item> response = new ApiResponse<>("success", saveItem, "Data Success Added",
                 HttpStatus.OK.value());
@@ -50,7 +51,7 @@ public class ItemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Item>> updateItem(@PathVariable Long id, @RequestBody Item itemDetails) {
+    public ResponseEntity<ApiResponse<Item>> updateItem(@PathVariable Long id, @RequestBody ItemRequest itemDetails) {
         Item item = itemService.updateItem(id, itemDetails);
         ApiResponse<Item> response = new ApiResponse<>("success", item, "Data Success Updated", HttpStatus.OK.value());
         return ResponseEntity.ok(response);

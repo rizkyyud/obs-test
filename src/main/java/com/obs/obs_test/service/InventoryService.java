@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.obs.obs_test.model.entity.Inventory;
+import com.obs.obs_test.model.request.InventoryRequest;
 import com.obs.obs_test.usecase.Inventory.CreateInventoryUseCase;
 import com.obs.obs_test.usecase.Inventory.DeleteInventoryUseCase;
 import com.obs.obs_test.usecase.Inventory.GetAllInventoryUseCase;
@@ -38,11 +39,11 @@ public class InventoryService {
         return getInventoryByIdUseCase.execute(id);
     }
 
-    public Inventory createInventory(Inventory inventory) {
+    public Inventory createInventory(InventoryRequest inventory) {
         return createInventoryUseCase.execute(inventory);
     }
 
-    public Inventory updateInventory(Long id, Inventory inventory) {
+    public Inventory updateInventory(Long id, InventoryRequest inventory) {
         return updateInventoryUseCase.execute(id, inventory);
     }
 
