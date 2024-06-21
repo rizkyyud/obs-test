@@ -34,7 +34,7 @@ public class InventoryController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Inventory>> getInventoryById(Long id) {
         Inventory inventory = inventoryService.getInventoriesById(id);
         ApiResponse<Inventory> response = new ApiResponse<>("success", inventory, "Data Success Get",

@@ -34,7 +34,7 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Order>> getOrderById(Long id) {
         Order order = orderService.getOrderById(id);
         ApiResponse<Order> response = new ApiResponse<>("success", order, "Data Success Get",

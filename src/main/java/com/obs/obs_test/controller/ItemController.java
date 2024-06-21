@@ -34,7 +34,7 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Item>> getItemById(Long id) {
         Item item = itemService.getItemById(id);
         ApiResponse<Item> response = new ApiResponse<>("success", item, "Data Success Get",
@@ -62,5 +62,9 @@ public class ItemController {
         itemService.deleteItem(id);
         ApiResponse<Item> response = new ApiResponse<>("success", null, "Data Success Delete", HttpStatus.OK.value());
         return ResponseEntity.ok(response);
+    }
+
+    public void setItemService(ItemService itemService) {
+        this.itemService = itemService;
     }
 }
